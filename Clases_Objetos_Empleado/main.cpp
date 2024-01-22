@@ -9,13 +9,13 @@ private:
     string domicilio;
     float sueldo;
     string reportaA;
-//Test
 public:
-    Empleado() {
-        nombre = " ";
-        domicilio = " ";
-        sueldo = 0;
-        reportaA = " ";
+    Empleado(int claveEmpleado, string nombre, string domicilio, float sueldo, string reportaA) {
+        this->claveEmpleado = claveEmpleado;
+        this->nombre = nombre;
+        this->domicilio = domicilio;
+        this->sueldo = sueldo;
+        this->reportaA = reportaA;
     }
     void imprime() {
         cout << "Domicilio:" << this->domicilio << "\nNombre:" << this->nombre << "\nSueldo:" << this->sueldo
@@ -30,18 +30,14 @@ public:
     void actualizarSueldo(float suel) {
         this->sueldo = suel;
     }
-    void agregarNombre(string name){
-        this-> nombre = name;
-
-    }
 };
 
 int main() {
 
     int opcion;
     int opcion2 = 0;
-    Empleado jefePersonal;
-    Empleado jefePlanta;
+    Empleado jefePersonal(1256,"Juan Perez","El pedregal #28", 3560.0, "Pablo Ramirez");
+    Empleado jefePlanta(1257, "Pedro Gutierrez", "Republica de argentina #16", 4250.0, "Pablo Ramirez");
     string domicilio;
     float sueldo;
     string reporta;
@@ -58,9 +54,7 @@ int main() {
 
         switch (opcion2) {
             case 1:
-                jefePlanta.agregarNombre("Carlos Perez");
                 cin.ignore();
-
                 cout << "Ingresa el domicilio:" << endl;
                 getline(cin, domicilio);
                 jefePlanta.cambiaDomicilio(domicilio);
@@ -95,7 +89,6 @@ int main() {
          do{
         switch (opcion2) {
             case 1:
-                jefePersonal.agregarNombre("Juan castro");
                 cin.ignore();
                 cout << "Ingresa el domicilio:" << endl;
                 getline(cin, domicilio);
