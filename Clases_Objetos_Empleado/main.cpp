@@ -9,7 +9,7 @@ private:
     string domicilio;
     float sueldo;
     string reportaA;
-
+//Test
 public:
     Empleado() {
         nombre = " ";
