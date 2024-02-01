@@ -2,154 +2,128 @@
 
 using namespace std;
 
-class Empleado {
+class Materia{
 private:
-    int claveEmpleado;
+    int clave;
     string nombre;
-    string domicilio;
-    float sueldo;
-    string reportaA;
+    string profesorTit;
+    string libroTexto;
+
 public:
-    Empleado(int claveEmpleado, string nombre, string domicilio, float sueldo, string reportaA) {
-        this->claveEmpleado = claveEmpleado;
-        this->nombre = nombre;
-        this->domicilio = domicilio;
-        this->sueldo = sueldo;
-        this->reportaA = reportaA;
-    }
-    void imprime() {
-        cout << "Domicilio:" << this->domicilio << "\nNombre:" << this->nombre << "\nSueldo:" << this->sueldo
-             << "\nReporta a:" << this->reportaA << endl;
-    }
-    void cambiaDomicilio(string domic) {
-        this->domicilio = domic;
-    }
-    void cambiaReportaA(string reporta) {
-        this->reportaA = reporta;
-    }
-    void actualizarSueldo(float suel) {
-        this->sueldo = suel;
+    Materia(int claveN, string nombreN, string profesor, string libro){
+        this->clave = claveN;
+        this->nombre = nombreN;
+        this->profesorTit = profesor;
+        this->libroTexto = libro;
     }
 
-    bool operator ==(const Empleado& emp) const {
-        return claveEmpleado == emp.claveEmpleado;
+    void imprime(){
+        cout<<"Clave:"<<this->clave<<"\nNombre:"<<this->nombre<<"\nProfesor:"<<
+        this->profesorTit<<"\nLibro:"<<this->libroTexto<<endl;
+    }
+    void cambiaClave(int claveN){
+        this->clave = claveN;
+
+    }
+    void cambiaProfe(string profesorN){
+        this->profesorTit = profesorN;
+    }
+     bool operator==(const Materia& other) const {
+        return clave == other.clave;
     }
 
-    bool operator !=(const Empleado& emp) const {
-        return !(*this == emp);
+    bool operator!=(const Materia& mate) const {
+        return !(*this == mate);
     }
 
-    bool operator <(const Empleado& emp) const {
-        return claveEmpleado < emp.claveEmpleado;
+    bool operator<(const Materia& mate) const {
+        return clave < mate.clave;
     }
 
-    bool operator >(const Empleado& emp) const {
-        return claveEmpleado > emp.claveEmpleado;
+    bool operator>(const Materia& mate) const {
+        return clave > mate.clave;
     }
 
-    friend istream& operator >>(istream& input, Empleado& emp) {
-        input >> emp.claveEmpleado >> emp.nombre >> emp.domicilio >> emp.sueldo >> emp.reportaA;
+    friend istream& operator>>(istream& input, Materia& materia) {
+    	std::cout<<"Ingresa la Clave de la materia:";
+        input >> materia.clave;
+        std::cout<<"Ingresa el nombre de la materia:";
+		input >> materia.nombre;
+		std::cout<<"Ingresa el profesor de la materia:";
+		input >> materia.profesorTit;
+		std::cout<<"Ingresa el libro de texto de la materia:";
+		input >> materia.libroTexto;
         return input;
     }
 
-    friend ostream& operator <<(ostream& output, const Empleado& emp) {
-        output << "Clave Empleado: " << emp.claveEmpleado << "\nNombre: " << emp.nombre
-               << "\nDomicilio: " << emp.domicilio << "\nSueldo: " << emp.sueldo
-               << "\nReporta a: " << emp.reportaA << endl;
+    friend ostream& operator<<(ostream& output, const Materia& materia) {
+        output << "Clave: " << materia.clave << "\nNombre: " << materia.nombre
+               << "\nProfesor: " << materia.profesorTit << "\nLibro: " << materia.libroTexto << endl;
         return output;
     }
 
-    Empleado operator + (const Empleado& other) const {
-        
-        Empleado combined(0, "", "", sueldo + other.sueldo, "");
+    Materia operator+(const Materia& other) const {
+        Materia combined(0, "", "", "");
+        combined.nombre = this->nombre + " & " + other.nombre;
         return combined;
     }
 
 };
 
-int main() {
+void menu(Materia &materia){
+    int opcion, clave;
+    string nombre, profesor, libro;
 
-    int opcion;
-    int opcion2 = 0;
-    Empleado jefePersonal(1256,"Juan Perez","El pedregal #28", 3560.0, "Pablo Ramirez");
-    Empleado jefePlanta(1257, "Pedro Gutierrez", "Republica de argentina #16", 4250.0, "Pablo Ramirez");
-    string domicilio;
-    float sueldo;
-    string reporta;
     do{
+    system("CLS");
+    cout<<"1)Cambiar clave\n2)Cambiar profesor\n3)Imprimir detalles\n4)salir\nSelecciona una opcion:"<<endl;
+    cin>>opcion;
 
-    cout<< "Selecciona un empleado a modificar:\n1)Jefe Planta\n2)Jefe Personal" << endl;
-    cin >> opcion;
-    }while(opcion !=1 && opcion != 2);
+    switch (opcion){
+    case 1:
+        cout<<"Ingresa la nueva clave:"<<endl;
+        cin>>clave;
+        materia.cambiaClave(clave);
+        break;
+    case 2:
+        cout<<"Ingresa el nombre del profesor:"<<endl;
+        cin.ignore();
+        getline(cin, profesor);
+        materia.cambiaProfe(profesor);
+    case 3:
+        materia.imprime();
+        system("pause");
+        break;
 
-    if (opcion == 1) {
-            do{
-
-
-        cout << "Selecciona una accion:\n1)Cambiar Domicilio\n2)Cambiar sueldo\n3)Imprimir\n4)Cambiar quien reporta"
-             << endl;
-        cin >> opcion2;
-
-        switch (opcion2) {
-            case 1:
-                cin.ignore();
-                cout << "Ingresa el domicilio:" << endl;
-                getline(cin, domicilio);
-                jefePlanta.cambiaDomicilio(domicilio);
-                break;
-            case 2:
-
-                cout << "Ingresa el sueldo:" << endl;
-                cin >> sueldo;
-                jefePlanta.actualizarSueldo(sueldo);
-                break;
-            case 3:
-                jefePlanta.imprime();
-                break;
-            case 4:
-                cin.ignore();
-                cout << "Ingresa el nombre de quien reporta:" << endl;
-                getline(cin, reporta);
-                jefePlanta.cambiaReportaA(reporta);
-                break;
-            default:
-                cout<<""<<endl;
-
-        }
-    }while(opcion !=5);
-
+    default:
+        cout<<"Opcion invalida"<<endl;
+        system("pause");
+        break;
     }
+    }while(opcion !=4);
+}
 
-    else if (opcion == 2) {
-        cout << "Selecciona una accion:\n1)Cambiar Domicilio\n2)Cambiar sueldo\n3)Imprimir\n4)Cambiar quien reporta"
-             << endl;
-        cin >> opcion2;
-         do{
-            system("cls");
-        switch (opcion2) {
-            case 1:
-                cin.ignore();
-                cout << "Ingresa el domicilio:" << endl;
-                getline(cin, domicilio);
-                jefePersonal.cambiaDomicilio(domicilio);
-                break;
-            case 2:
-                cout << "Ingresa el sueldo:" << endl;
-                cin >> sueldo;
-                jefePersonal.actualizarSueldo(sueldo);
-                break;
-            case 3:
-                jefePersonal.imprime();
-                break;
-            case 4:
-                cin.ignore();
-                cout << "Ingresa el nombre de quien reporta:" << endl;
-                getline(cin, reporta);
-                jefePersonal.cambiaReportaA(reporta);
-                break;
-        }
-         }while(opcion !=5);
+int main(){
+    int opcion;
+    Materia programacion(8812,"Programacion", "Jose Cardenas", "Fundamentos de programacion");
+    Materia basesDatos(8815, "Bases de Datos", "Manuel Perez", "Las bases de datos");
+     std::cin>>programacion;
+    do{
+            system("CLS");
+    cout<<"Materias disponibles:\n1)Programacion\n2)Bases de datos\nSeleccione una materia a modificar:"<<endl;
+    cin>>opcion;
+
+    if(opcion ==1){
+        menu(programacion);
     }
-
+    else if (opcion == 2){
+        menu(basesDatos);
+    }
+    else{
+        cout<<"Opcion invalida"<<endl;
+        system("pause");
+    }
+    }while(opcion != 3);
     return 0;
+
 }
